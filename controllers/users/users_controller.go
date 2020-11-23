@@ -10,26 +10,34 @@ import (
 	"strconv"
 )
 
-func GetUser(c *gin.Context) {
-	userId, userErr := strconv.ParseInt(c.Param("user_id"), 10, 64)
-
+func getUserId(userIdParam string) (int64, *errors.RestErr) {
+	userId, userErr := strconv.ParseInt(userIdParam, 10, 64)
 	if userErr != nil {
-		err := errors.NewBadRequestError("Invalid user id")
-		c.JSON(err.Status, err)
+		return 0, errors.NewBadRequestError("Invalid user id")
+	}
+	return userId, nil
+
+}
+
+func Get(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
 		return
 	}
 
-	user, getErr := services.GetUser(userId)
+	user, getErr := services.UsersService.GetUser(userId)
 
 	if getErr != nil {
 		c.JSON(getErr.Status, getErr)
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, user.Marshall(c.GetHeader("X-Public") == "true"))
 }
 
-func CreateUser(c *gin.Context) {
+func Create(c *gin.Context) {
 	var user users.User
 
 	//fmt.Println("get here", user)
@@ -48,7 +56,7 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	result, saveErr := services.CreateUser(&user)
+	result, saveErr := services.UsersService.CreateUser(&user)
 
 	if saveErr != nil {
 		c.JSON(saveErr.Status, saveErr)
@@ -56,9 +64,57 @@ func CreateUser(c *gin.Context) {
 	}
 
 	fmt.Println(user)
-	c.JSON(http.StatusCreated, result)
+	c.JSON(http.StatusCreated, result.Marshall(c.GetHeader("X-Public") == "true"))
 }
 
-//func SearchUser(c *gin.Context) {
-//	c.String(http.StatusNotImplemented, "fix me")
-//}
+func Update(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
+		return
+	}
+
+	var user users.User
+	// json body parse
+	if err := c.ShouldBindJSON(&user); err != nil {
+		restErr := errors.NewBadRequestError("Invalid JSON body")
+		c.JSON(restErr.Status, restErr)
+		return
+	}
+	user.Id = userId
+
+	// check if it is partial update (i.e. PATCH)
+	isPartial := c.Request.Method == http.MethodPatch
+	result, err := services.UsersService.UpdateUser(isPartial, &user)
+	if err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+	c.JSON(http.StatusOK, result.Marshall(c.GetHeader("X-Public") == "true"))
+}
+
+func Delete(c *gin.Context) {
+	userId, idErr := getUserId(c.Param("user_id"))
+
+	if idErr != nil {
+		c.JSON(idErr.Status, idErr)
+		return
+	}
+
+	if err := services.UsersService.DeleteUser(userId); err != nil {
+		c.JSON(err.Status, err)
+		return
+	}
+	c.JSON(http.StatusOK, map[string]string{"status": "deleted"})
+}
+
+func Search(c *gin.Context) {
+	status := c.Query("status")
+	users, err := services.UsersService.SearchUser(status)
+	if err != nil {
+		c.JSON(err.Status, err)
+	}
+
+	c.JSON(http.StatusOK, users.Marshal(c.GetHeader("X-Public") == "true"))
+}

@@ -19,10 +19,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85c55202-2b91-4649-861e-19b026c92cdb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/users/users_controller.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/users/user_dto.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/services/users_service.go" afterDir="false" />
+    <list default="true" id="85c55202-2b91-4649-861e-19b026c92cdb" name="Default Changelist" comment="basic structure">
+      <change afterPath="$PROJECT_DIR$/datasources/mysql/users_db/users_db.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/users/user_marshaller.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logger/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/crypto_utils/crypto_utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/date_utils/date_utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/mysql_utils/mysql_utils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/application.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/application.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/url_mappings.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/url_mappings.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/users/users_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/users/users_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/users/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/users/user_dao.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/users/user_dto.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/users/user_dto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/users_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/users_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/errors/rest_error.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/errors/rest_error.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +68,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/utils/crypto_utils" />
       <recent name="$PROJECT_DIR$/controllers/users" />
       <recent name="$PROJECT_DIR$/controllers/ping" />
     </key>
@@ -63,6 +77,12 @@
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="bookstore_users-api" />
       <working_directory value="$PROJECT_DIR$" />
+      <envs>
+        <env name="mysql_users_username" value="root" />
+        <env name="mysql_users_password" value="password" />
+        <env name="mysql_users_host" value="127.0.0.1:3306" />
+        <env name="mysql_users_schema" value="users_db" />
+      </envs>
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/main.go" />
       <package value="github.com/moz5691/bookstore_users-api" />
@@ -90,22 +110,55 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="basic structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="basic structure" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1331" height="311" key="GridCell.Tab.0.bottom" timestamp="1605888122326">
+    <state x="1008" y="504" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605916314922">
       <screen x="0" y="25" width="2560" height="1327" />
     </state>
-    <state width="1331" height="311" key="GridCell.Tab.0.bottom/0.25.2560.1327@0.25.2560.1327" timestamp="1605888122326" />
-    <state width="1331" height="311" key="GridCell.Tab.0.center" timestamp="1605888122325">
+    <state x="1008" y="504" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.2560.1327@0.25.2560.1327" timestamp="1605916314922" />
+    <state x="1579" y="392" width="544" height="541" key="EnvironmentVariablesDialog" timestamp="1605916312537">
       <screen x="0" y="25" width="2560" height="1327" />
     </state>
-    <state width="1331" height="311" key="GridCell.Tab.0.center/0.25.2560.1327@0.25.2560.1327" timestamp="1605888122325" />
-    <state width="1331" height="311" key="GridCell.Tab.0.left" timestamp="1605888122325">
+    <state x="1579" y="392" width="544" height="541" key="EnvironmentVariablesDialog/0.25.2560.1327@0.25.2560.1327" timestamp="1605916312537" />
+    <state width="1331" height="360" key="GridCell.Tab.0.bottom" timestamp="1606145201262">
+      <screen x="0" y="25" width="2560" height="1331" />
+    </state>
+    <state width="1331" height="360" key="GridCell.Tab.0.bottom/0.25.2560.1327@0.25.2560.1327" timestamp="1606077237478" />
+    <state width="1331" height="360" key="GridCell.Tab.0.bottom/0.25.2560.1328@0.25.2560.1328" timestamp="1606098092874" />
+    <state width="1331" height="360" key="GridCell.Tab.0.bottom/0.25.2560.1330@0.25.2560.1330" timestamp="1606141241752" />
+    <state width="1331" height="360" key="GridCell.Tab.0.bottom/0.25.2560.1331@0.25.2560.1331" timestamp="1606145201262" />
+    <state width="1331" height="360" key="GridCell.Tab.0.center" timestamp="1606145201261">
+      <screen x="0" y="25" width="2560" height="1331" />
+    </state>
+    <state width="1331" height="360" key="GridCell.Tab.0.center/0.25.2560.1327@0.25.2560.1327" timestamp="1606077237477" />
+    <state width="1331" height="360" key="GridCell.Tab.0.center/0.25.2560.1328@0.25.2560.1328" timestamp="1606098092873" />
+    <state width="1331" height="360" key="GridCell.Tab.0.center/0.25.2560.1330@0.25.2560.1330" timestamp="1606141241752" />
+    <state width="1331" height="360" key="GridCell.Tab.0.center/0.25.2560.1331@0.25.2560.1331" timestamp="1606145201261" />
+    <state width="1331" height="360" key="GridCell.Tab.0.left" timestamp="1606145201260">
+      <screen x="0" y="25" width="2560" height="1331" />
+    </state>
+    <state width="1331" height="360" key="GridCell.Tab.0.left/0.25.2560.1327@0.25.2560.1327" timestamp="1606077237476" />
+    <state width="1331" height="360" key="GridCell.Tab.0.left/0.25.2560.1328@0.25.2560.1328" timestamp="1606098092873" />
+    <state width="1331" height="360" key="GridCell.Tab.0.left/0.25.2560.1330@0.25.2560.1330" timestamp="1606141241751" />
+    <state width="1331" height="360" key="GridCell.Tab.0.left/0.25.2560.1331@0.25.2560.1331" timestamp="1606145201260" />
+    <state width="1331" height="360" key="GridCell.Tab.0.right" timestamp="1606145201261">
+      <screen x="0" y="25" width="2560" height="1331" />
+    </state>
+    <state width="1331" height="360" key="GridCell.Tab.0.right/0.25.2560.1327@0.25.2560.1327" timestamp="1606077237477" />
+    <state width="1331" height="360" key="GridCell.Tab.0.right/0.25.2560.1328@0.25.2560.1328" timestamp="1606098092873" />
+    <state width="1331" height="360" key="GridCell.Tab.0.right/0.25.2560.1330@0.25.2560.1330" timestamp="1606141241752" />
+    <state width="1331" height="360" key="GridCell.Tab.0.right/0.25.2560.1331@0.25.2560.1331" timestamp="1606145201261" />
+    <state x="1318" y="400" key="Vcs.Push.Dialog.v2" timestamp="1605888377972">
       <screen x="0" y="25" width="2560" height="1327" />
     </state>
-    <state width="1331" height="311" key="GridCell.Tab.0.left/0.25.2560.1327@0.25.2560.1327" timestamp="1605888122325" />
-    <state width="1331" height="311" key="GridCell.Tab.0.right" timestamp="1605888122326">
-      <screen x="0" y="25" width="2560" height="1327" />
+    <state x="1318" y="400" key="Vcs.Push.Dialog.v2/0.25.2560.1327@0.25.2560.1327" timestamp="1605888377972" />
+    <state x="1524" y="583" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606146965226">
+      <screen x="0" y="25" width="2560" height="1331" />
     </state>
-    <state width="1331" height="311" key="GridCell.Tab.0.right/0.25.2560.1327@0.25.2560.1327" timestamp="1605888122326" />
+    <state x="1524" y="581" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2560.1327@0.25.2560.1327" timestamp="1605888220770" />
+    <state x="1524" y="583" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.2560.1331@0.25.2560.1331" timestamp="1606146965226" />
   </component>
 </project>
